@@ -1,0 +1,60 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Orders{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+ <h3>Welcome <span class="text-capitalize">{{request.user}}</span></h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="{% url 'orders' %}" class="btn btn-primary">Orders</a></li>
+   </ul>
+  </div>
+  <div class="col-sm-9 offset-sm-1">
+    {% for ops in op %}
+   <div class="row shadow-sm mb-3">
+    <div class="col-sm-3">
+        <img src="{{ops.product.product_image.url}}" alt="" srcset="" class="img-fluid" height="150" width="150">
+    </div>
+    <div class="cl-sm-7">
+        <p>Product: {{ops.product.title}}</p>
+        <p>Quantity: {{ops.quantity}}</p>
+        <p>Price: {{ops.total_coast}}</p>
+
+    </div>
+    <div class="col-sm-3 fw-bold">
+        <p>Order Status: {{ops.status}}</p>
+        {% if ops.status == "Accepted" %} 
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style=" width: 200" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+
+        </div>
+        {% endif %}
+        {% if ops.status == 'Packed' %}
+        <div class="progress">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 200" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        {% endif %}
+
+        {% if ops.status == "On The Way" %}
+        <div class="progress">
+            <div class="progress-bar bg-warning " role="progressbar" style="width: 200" aria-valuenow="20" aria-valuemin="0" aria-valuemin="100"></div>
+
+        </div>
+        {% endif %}
+        {% if ops.status == 'Delivered' %}
+        <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 200" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+
+        </div>
+        {% endif %}
+
+
+    </div>
+
+   </div>
+   {% endfor %}
+  </div>
+ </div>
+</div>
+{% endblock main-content %}
